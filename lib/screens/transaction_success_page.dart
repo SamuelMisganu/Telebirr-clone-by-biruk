@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../widgets/transaction detail.dart';
 
 class TransactionSuccessPage extends StatefulWidget {
   final double amount;
@@ -24,6 +25,16 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
     super.initState();
     _transactionTime = _formatCurrentTime();
     _transactionNumber = _generateTransactionId();
+
+    // Save transaction to live history list for "Transaction Details >"
+    TransactionHistoryNotifier.add(
+      TransactionRecord(
+        recipientName: widget.recipientName,
+        amount: widget.amount,
+        time: _transactionTime,
+        transactionNumber: _transactionNumber,
+      ),
+    );
   }
 
   // Generates current date & time in YYYY/MM/DD HH:MM:SS format
@@ -34,11 +45,13 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
         '${twoDigits(now.hour)}:${twoDigits(now.minute)}:${twoDigits(now.second)}';
   }
 
-  // Generates a random 10-character alphanumeric Telebirr transaction ID (e.g., DKQ1OTJJI7)
+  // Generates a realistic 10-character Telebirr ID starting with "DK" (e.g., DKK8G0V69G)
   String _generateTransactionId() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random();
-    return List.generate(10, (index) => chars[random.nextInt(chars.length)]).join();
+    final suffix =
+        List.generate(8, (index) => chars[random.nextInt(chars.length)]).join();
+    return 'DK$suffix';
   }
 
   @override
@@ -58,7 +71,8 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                 children: [
                   TextButton.icon(
                     onPressed: () {},
-                    icon: const Icon(Icons.download_outlined, color: primaryGreen, size: 20),
+                    icon: const Icon(Icons.download_outlined,
+                        color: primaryGreen, size: 20),
                     label: const Text(
                       'Download',
                       style: TextStyle(color: primaryGreen, fontSize: 14),
@@ -66,7 +80,8 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ),
                   TextButton.icon(
                     onPressed: () {},
-                    icon: const Icon(Icons.share_outlined, color: primaryGreen, size: 20),
+                    icon: const Icon(Icons.share_outlined,
+                        color: primaryGreen, size: 20),
                     label: const Text(
                       'Share',
                       style: TextStyle(color: primaryGreen, fontSize: 14),
@@ -152,12 +167,12 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
 
               // FAYDA Promo Banner
               Container(
                 width: double.infinity,
-                height: 110,
+                height: 105,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -167,21 +182,48 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                     end: Alignment.centerRight,
                   ),
                 ),
-                child: const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: const Row(
                   children: [
-                    Text(
-                      'Link your telebirr\nwith FAYDA',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        'Link your telebirr\nwith FAYDA',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
+                    Icon(Icons.phone_android, color: Colors.white, size: 46),
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
+
+              // Banner Indicator Dots (matching screenshot)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: const BoxDecoration(
+                      color: primaryGreen,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  Container(
+                    width: 8,
+                    height: 8,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: primaryGreen),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ],
+              ),
+
               const Spacer(),
 
               // Finished Button
@@ -237,4 +279,3 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
     );
   }
 }
-
