@@ -59,39 +59,57 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           child: Column(
             children: [
-              // Top Download & Share Actions
+              // 1. Top Download & Share Row (aligned flush with outer margins)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.download_outlined,
-                        color: primaryGreen, size: 20),
-                    label: const Text(
-                      'Download',
-                      style: TextStyle(color: primaryGreen, fontSize: 14),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        Icon(Icons.download_outlined,
+                            color: primaryGreen, size: 21),
+                        SizedBox(width: 4),
+                        Text(
+                          'Download',
+                          style: TextStyle(
+                            color: primaryGreen,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.share_outlined,
-                        color: primaryGreen, size: 20),
-                    label: const Text(
-                      'Share',
-                      style: TextStyle(color: primaryGreen, fontSize: 14),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Row(
+                      children: [
+                        Icon(Icons.share_outlined,
+                            color: primaryGreen, size: 21),
+                        SizedBox(width: 4),
+                        Text(
+                          'Share',
+                          style: TextStyle(
+                            color: primaryGreen,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 22),
 
-              // Green Checkmark Circle
+              // 2. Green Checkmark Circle & "Successful"
               Container(
-                width: 60,
-                height: 60,
+                width: 58,
+                height: 58,
                 decoration: const BoxDecoration(
                   color: primaryGreen,
                   shape: BoxShape.circle,
@@ -104,38 +122,42 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                 style: TextStyle(
                   color: primaryGreen,
                   fontSize: 16,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
               const SizedBox(height: 36),
 
-              // Dynamic Negative Amount
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '-${widget.amount.toStringAsFixed(2)} ',
-                      style: const TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black87,
-                      ),
+              // 3. Dynamic Negative Amount (-96.00 (ETB))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    '-${widget.amount.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF1A1A1A),
+                      letterSpacing: -0.5,
                     ),
-                    const TextSpan(
-                      text: '(ETB)',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                      ),
+                  ),
+                  const SizedBox(width: 6),
+                  const Text(
+                    '(ETB)',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF333333),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(height: 28),
-              const Divider(thickness: 1, color: Color(0xFFEEEEEE)),
-              const SizedBox(height: 16),
+              const Divider(thickness: 1, height: 1, color: Color(0xFFF0F0F0)),
+              const SizedBox(height: 18),
 
-              // Transaction Metadata Rows
+              // 4. Transaction Metadata Rows
               _buildDetailRow('Transaction Time:', _transactionTime),
               const SizedBox(height: 16),
               _buildDetailRow('Transaction Type:', 'Transfer Money'),
@@ -143,48 +165,50 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
               _buildDetailRow('Transaction To:', widget.recipientName),
               const SizedBox(height: 16),
               _buildDetailRow('Transaction Number:', _transactionNumber),
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
-              // Built-in Icon + Text QR Code Link
+              // 5. Right-aligned QR Code Link
               Align(
                 alignment: Alignment.centerRight,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    Icon(Icons.qr_code_2, color: primaryGreen, size: 24),
-                    SizedBox(width: 6),
-                    Text(
-                      'QR Code',
-                      style: TextStyle(
-                        color: primaryGreen,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.qr_code_2, color: primaryGreen, size: 23),
+                      SizedBox(width: 6),
+                      Text(
+                        'QR Code',
+                        style: TextStyle(
+                          color: primaryGreen,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
 
-              // FAYDA Promo Banner Image
+              // 6. FAYDA Promo Banner Image (full uncropped aspect ratio)
               ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
                   'images/fayda_banner.jpg',
                   width: double.infinity,
-                  height: 105,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 ),
               ),
               const SizedBox(height: 10),
 
-              // Banner Indicator Dots
+              // 7. Banner Indicator Dots
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 8,
-                    height: 8,
+                    width: 7,
+                    height: 7,
                     decoration: const BoxDecoration(
                       color: primaryGreen,
                       shape: BoxShape.circle,
@@ -192,10 +216,10 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ),
                   const SizedBox(width: 6),
                   Container(
-                    width: 8,
-                    height: 8,
+                    width: 7,
+                    height: 7,
                     decoration: BoxDecoration(
-                      border: Border.all(color: primaryGreen),
+                      border: Border.all(color: primaryGreen, width: 1),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -204,10 +228,10 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
 
               const Spacer(),
 
-              // Finished Button
+              // 8. Bottom Finished Button
               SizedBox(
                 width: 220,
-                height: 48,
+                height: 46,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).popUntil((route) => route.isFirst);
@@ -224,7 +248,7 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                     'Finished',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
@@ -243,14 +267,18 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 14, color: Colors.black54),
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF8C8C8C),
+          ),
         ),
         Text(
           value,
           style: const TextStyle(
             fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Colors.black87,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF1A1A1A),
           ),
         ),
       ],
