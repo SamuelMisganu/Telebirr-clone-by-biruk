@@ -59,10 +59,10 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+          padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
           child: Column(
             children: [
-              // 1. Top Download & Share Row (aligned flush with outer margins)
+              // 1. Top Download & Share Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -71,13 +71,13 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                     child: const Row(
                       children: [
                         Icon(Icons.download_outlined,
-                            color: primaryGreen, size: 21),
+                            color: primaryGreen, size: 19),
                         SizedBox(width: 4),
                         Text(
                           'Download',
                           style: TextStyle(
                             color: primaryGreen,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -89,13 +89,13 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                     child: const Row(
                       children: [
                         Icon(Icons.share_outlined,
-                            color: primaryGreen, size: 21),
+                            color: primaryGreen, size: 19),
                         SizedBox(width: 4),
                         Text(
                           'Share',
                           style: TextStyle(
                             color: primaryGreen,
-                            fontSize: 15,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -104,30 +104,30 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ),
                 ],
               ),
-              const SizedBox(height: 22),
+              const SizedBox(height: 18),
 
               // 2. Green Checkmark Circle & "Successful"
               Container(
-                width: 58,
-                height: 58,
+                width: 50,
+                height: 50,
                 decoration: const BoxDecoration(
                   color: primaryGreen,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check, color: Colors.white, size: 36),
+                child: const Icon(Icons.check, color: Colors.white, size: 29),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 9),
               const Text(
                 'Successful',
                 style: TextStyle(
                   color: primaryGreen,
-                  fontSize: 16,
+                  fontSize: 14.5,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              const SizedBox(height: 36),
+              const SizedBox(height: 46),
 
-              // 3. Dynamic Negative Amount (-96.00 (ETB))
+              // 3. Dynamic Negative Amount (-262.00 (ETB))
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -136,36 +136,36 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   Text(
                     '-${widget.amount.toStringAsFixed(2)}',
                     style: const TextStyle(
-                      fontSize: 35,
+                      fontSize: 29,
                       fontWeight: FontWeight.w400,
                       color: Color(0xFF1A1A1A),
-                      letterSpacing: -0.5,
+                      letterSpacing: -0.4,
                     ),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: 5),
                   const Text(
                     '(ETB)',
                     style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
                       color: Color(0xFF333333),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 28),
-              const Divider(thickness: 1, height: 1, color: Color(0xFFF0F0F0)),
-              const SizedBox(height: 18),
+              const SizedBox(height: 26),
+              const Divider(thickness: 1, height: 1, color: Color(0xFFF2F2F2)),
+              const SizedBox(height: 15),
 
               // 4. Transaction Metadata Rows
               _buildDetailRow('Transaction Time:', _transactionTime),
-              const SizedBox(height: 16),
+              const SizedBox(height: 13),
               _buildDetailRow('Transaction Type:', 'Transfer Money'),
-              const SizedBox(height: 16),
+              const SizedBox(height: 13),
               _buildDetailRow('Transaction To:', widget.recipientName),
-              const SizedBox(height: 16),
+              const SizedBox(height: 13),
               _buildDetailRow('Transaction Number:', _transactionNumber),
-              const SizedBox(height: 18),
+              const SizedBox(height: 15),
 
               // 5. Right-aligned QR Code Link
               Align(
@@ -175,13 +175,13 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.qr_code_2, color: primaryGreen, size: 23),
-                      SizedBox(width: 6),
+                      Icon(Icons.qr_code_2, color: primaryGreen, size: 20),
+                      SizedBox(width: 5),
                       Text(
                         'QR Code',
                         style: TextStyle(
                           color: primaryGreen,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -189,9 +189,9 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 18),
 
-              // 6. FAYDA Promo Banner Image (full uncropped aspect ratio)
+              // 6. FAYDA Promo Banner Image
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.asset(
@@ -200,15 +200,15 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 9),
 
               // 7. Banner Indicator Dots
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    width: 7,
-                    height: 7,
+                    width: 6.5,
+                    height: 6.5,
                     decoration: const BoxDecoration(
                       color: primaryGreen,
                       shape: BoxShape.circle,
@@ -216,8 +216,8 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   ),
                   const SizedBox(width: 6),
                   Container(
-                    width: 7,
-                    height: 7,
+                    width: 6.5,
+                    height: 6.5,
                     decoration: BoxDecoration(
                       border: Border.all(color: primaryGreen, width: 1),
                       shape: BoxShape.circle,
@@ -230,8 +230,8 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
 
               // 8. Bottom Finished Button
               SizedBox(
-                width: 220,
-                height: 46,
+                width: 195,
+                height: 44,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).popUntil((route) => route.isFirst);
@@ -247,13 +247,13 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
                   child: const Text(
                     'Finished',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
             ],
           ),
         ),
@@ -268,7 +268,7 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 13.5,
             fontWeight: FontWeight.w400,
             color: Color(0xFF8C8C8C),
           ),
@@ -276,7 +276,7 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
         Text(
           value,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 13.5,
             fontWeight: FontWeight.w400,
             color: Color(0xFF1A1A1A),
           ),
