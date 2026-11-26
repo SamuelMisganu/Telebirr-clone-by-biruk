@@ -285,6 +285,57 @@ class _SendAmountPageState extends State<SendAmountPage> {
             onPressed: () => _onKeyPress(label),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
+                Row(
+children: [
+_buildDigitKey('7'),
+_buildDigitKey('8'),
+_buildDigitKey('9'),
+],
+),
+Row(
+children: [
+_buildDigitKey('0', flex: 2),
+_buildDigitKey('.'),
+],
+),
+],
+),
+),
+Expanded(
+flex: 1,
+child: Column(
+children: [
+Padding(
+padding: const EdgeInsets.all(3.0),
+child: SizedBox(
+height: 110,
+width: double.infinity,
+child: ElevatedButton(
+onPressed: _onBackspace,
+style: ElevatedButton.styleFrom(
+backgroundColor: Colors.white,
+foregroundColor: Colors.black87,
+elevation: 0,
+shape: RoundedRectangleBorder(
+borderRadius: BorderRadius.circular(4),
+),
+),
+child: const Icon(Icons.backspace_outlined),
+),
+),
+),
+Padding(
+padding: const EdgeInsets.all(3.0),
+child: SizedBox(
+height: 110,
+width: double.infinity,
+child: ElevatedButton(
+onPressed: _showConfirmationBottomSheet,
+style: ElevatedButton.styleFrom(
+backgroundColor: primaryGreen,
+foregroundColor: Colors.white,
+elevation: 0,
+shape: RoundedRectangleBorder(
 borderRadius: BorderRadius.circular(4),
 ),
 ),
