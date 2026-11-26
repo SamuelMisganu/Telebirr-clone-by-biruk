@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/balance_info.dart';
 import 'transaction_success_page.dart';
 
 class SendAmountPage extends StatefulWidget {
@@ -44,9 +45,11 @@ class _SendAmountPageState extends State<SendAmountPage> {
 
   void _showConfirmationBottomSheet() {
     final double originalAmount = double.tryParse(_amount) ?? 0.0;
+    if (originalAmount <= 0) return;
+
     const double serviceFee = 1.00;
     final double totalAmount = originalAmount + serviceFee;
-    const double availableBalance = 118.89;
+    final double availableBalance = BalanceNotifier.currentBalance.value;
     const primaryGreen = Color(0xFF8CC63F);
 
     showModalBottomSheet(
@@ -63,6 +66,7 @@ class _SendAmountPageState extends State<SendAmountPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Close X Icon
               Align(
                 alignment: Alignment.centerLeft,
                 child: IconButton(
@@ -70,6 +74,8 @@ class _SendAmountPageState extends State<SendAmountPage> {
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
+
+              // Recipient Title
               Text(
                 'Send Money to ${widget.recipientName}',
                 style: const TextStyle(
@@ -79,6 +85,8 @@ class _SendAmountPageState extends State<SendAmountPage> {
                 ),
               ),
               const SizedBox(height: 10),
+
+              // Total Amount + ETB
               RichText(
                 text: TextSpan(
                   children: [
@@ -102,6 +110,8 @@ class _SendAmountPageState extends State<SendAmountPage> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Original Amount & Service Fee Card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -149,6 +159,8 @@ class _SendAmountPageState extends State<SendAmountPage> {
                 ),
               ),
               const SizedBox(height: 14),
+
+              // Payment Method Card
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
@@ -213,11 +225,14 @@ class _SendAmountPageState extends State<SendAmountPage> {
                 ),
               ),
               const SizedBox(height: 24),
+
+              // Green Send Button
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
+                    BalanceNotifier.deduct(totalAmount);
                     Navigator.pop(context);
                     Navigator.push(
                       context,
@@ -259,104 +274,32 @@ class _SendAmountPageState extends State<SendAmountPage> {
     super.dispose();
   }
 
-  Widget _buildKeyButton(String label, {VoidCallback? onTap}) {
+  Widget _buildDigitKey(String label, {int flex = 1}) {
     return Expanded(
+      flex: flex,
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
+        padding: const EdgeInsets.all(3.0),
         child: SizedBox(
           height: 52,
           child: ElevatedButton(
-            onPressed: onTap ?? () => _onKeyPress(label),
+            onPressed: () => _onKeyPress(label),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-              foregroundColor: Colors.black87,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-            child: label == 'BACKSPACE'
-                ? const Icon(Icons.backspace_outlined, size: 22)
-                : Text(
-                    label,
-                    style: const TextStyle(
-),
-],
-),
-const Divider(height: 24, thickness: 1, color: Color(0xFFEEEEEE)),
-TextField(
-controller: _notesController,
-decoration: const InputDecoration(
-border: InputBorder.none,
-hintText: 'Add notes(optional)',
-hintStyle: TextStyle(color: Colors.black45, fontSize: 14),
-isDense: true,
-contentPadding: EdgeInsets.zero,
-),
-),
-],
-),
-),
-const Spacer(),
-Padding(
-padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-child: SizedBox(
-width: double.infinity,
-height: 48,
-child: ElevatedButton(
-onPressed: hasAmount ? _showConfirmationBottomSheet : null,
-style: ElevatedButton.styleFrom(
-backgroundColor: primaryGreen,
-disabledBackgroundColor: disabledGreen,
-foregroundColor: Colors.white,
-disabledForegroundColor: Colors.white,
-elevation: 0,
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(8),
+borderRadius: BorderRadius.circular(4),
 ),
 ),
 child: const Text(
-'Next',
+'OK',
 style: TextStyle(
-fontSize: 16,
+fontSize: 18,
 fontWeight: FontWeight.w600,
 ),
 ),
 ),
 ),
 ),
-Container(
-color: const Color(0xFFEBECEF),
-padding: const EdgeInsets.fromLTRB(6, 6, 6, 16),
-child: Column(
-children: [
-Row(
-children: [
-_buildKeyButton('1'),
-_buildKeyButton('2'),
-_buildKeyButton('3'),
 ],
 ),
-Row(
-children: [
-_buildKeyButton('4'),
-_buildKeyButton('5'),
-_buildKeyButton('6'),
-],
-),
-Row(
-children: [
-_buildKeyButton('7'),
-_buildKeyButton('8'),
-_buildKeyButton('9'),
-],
-),
-Row(
-children: [
-_buildKeyButton('.'),
-_buildKeyButton('0'),
-_buildKeyButton('BACKSPACE', onTap: _onBackspace),
-],
 ),
 ],
 ),
