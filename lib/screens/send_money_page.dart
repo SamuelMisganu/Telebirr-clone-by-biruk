@@ -10,6 +10,7 @@ class SendMoneyPage extends StatefulWidget {
 
 class _SendMoneyPageState extends State<SendMoneyPage> {
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   bool _isValid = false;
 
   final List<Map<String, String>> _recentContacts = [
@@ -37,20 +38,26 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
         .replaceFirst(RegExp(r'^0+'), '');
 
     final formattedPhone = '251$cleanDigits';
+    final typedName = _nameController.text.trim();
 
-    final matchedContact = _recentContacts.firstWhere(
-      (c) => c['phone'] == cleanDigits,
-      orElse: () => {
-        'name': customName ?? 'Anewar',
-        'phone': cleanDigits,
-      },
-    );
+    String finalRecipientName;
+    if (typedName.isNotEmpty) {
+      finalRecipientName = typedName;
+    } else if (customName != null && customName.isNotEmpty) {
+      finalRecipientName = customName;
+    } else {
+      final matchedContact = _recentContacts.firstWhere(
+        (c) => c['phone'] == cleanDigits,
+        orElse: () => {'name': 'Anewar', 'phone': cleanDigits},
+      );
+      finalRecipientName = matchedContact['name']!;
+    }
 
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => SendAmountPage(
-          recipientName: matchedContact['name']!,
+          recipientName: finalRecipientName,
           phoneNumber: formattedPhone,
         ),
       ),
@@ -60,6 +67,7 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
   @override
   void dispose() {
     _phoneController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -129,7 +137,7 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
             ),
             const SizedBox(height: 16),
 
-            // Mobile Number Input Card
+            // Mobile Number & Recipient Name Input Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -194,6 +202,40 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
+
+                  // Recipient Name Input Box
+                  const Text(
+                    'Please Enter Recipient Name',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: _nameController,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      hintText: 'Enter name who receives money',
+                      hintStyle: const TextStyle(color: Colors.black38),
+                      prefixIcon: const Icon(Icons.person_outline,
+                          color: primaryGreen),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            const BorderSide(color: primaryGreen, width: 1.5),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide:
+                            const BorderSide(color: primaryGreen, width: 2),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+
+                  // Next Button
                   SizedBox(
                     width: double.infinity,
                     height: 48,
@@ -236,52 +278,53 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                     color: Colors.black87,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.delete_outline, color: Colors.grey),
-                  onPressed: () {
-                    setState(() => _recentContacts.clear());
-                  },
-                ),
-              ],
-            ),
-
-            // Recent Contacts List
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _recentContacts.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 8),
-              itemBuilder: (context, index) {
-                final contact = _recentContacts[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: ListTile(
-                    leading: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFF5A623),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: const Icon(Icons.person, color: Colors.white),
-                    ),
-                    title: Text(
-                      contact['name']!,
-                      style: const TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                    subtitle: Text(
-                      '251${contact['phone']!}',
-                      style:
-                          const TextStyle(fontSize: 12, color: Colors.black54),
-                    ),
-                    trailing:
-                        const Icon(Icons.chevron_right, color: Colors.grey),
-                    onTap: () {
-                      _phoneController.text = contact['phone']!;
-                      _navigateToAmount(contact['phone']!,
+IconButton(
+icon: const Icon(Icons.delete_outline, color: Colors.grey),
+onPressed: () {
+setState(() => _recentContacts.clear());
+},
+),
+],
+),
+// Recent Contacts List
+ListView.separated(
+shrinkWrap: true,
+physics: const NeverScrollableScrollPhysics(),
+itemCount: _recentContacts.length,
+separatorBuilder: (_, __) => const SizedBox(height: 8),
+itemBuilder: (context, index) {
+final contact = _recentContacts[index];
+return Container(
+decoration: BoxDecoration(
+color: Colors.white,
+borderRadius: BorderRadius.circular(8),
+),
+child: ListTile(
+leading: Container(
+width: 40,
+height: 40,
+decoration: BoxDecoration(
+color: const Color(0xFFF5A623),
+borderRadius: BorderRadius.circular(6),
+),
+child: const Icon(Icons.person, color: Colors.white),
+),
+title: Text(
+contact['name']!,
+style: const TextStyle(fontWeight: FontWeight.w500),
+),
+subtitle: Text(
+'251${contact['phone']!}',
+style:
+const TextStyle(fontSize: 12, color: Colors.black54),
+),
+trailing:
+const Icon(Icons.chevron_right, color: Colors.grey),
+onTap: () {
+_phoneController.text = contact['phone']!;
+_nameController.text = contact['name']!;
+_navigateToAmount(
+contact['phone']!,
 customName: contact['name'],
 );
 },
