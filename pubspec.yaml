@@ -1,4 +1,4 @@
-name: telebirrbybr7
+name: rasabu
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -52,7 +52,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "images/br7logo.png"
+  image_path: "images/aabu.jpg"
   min_sdk_android: 21
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -83,7 +83,8 @@ flutter:
     - images/banner-3.jpg
     - images/ethio-logo.png
     - images/christmas.png
-    - images/br7logo.png
+    - images/aabu.jpg
+    - images/fayda_banner.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
