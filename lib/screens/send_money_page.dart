@@ -92,32 +92,14 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // FAYDA Promo Banner
-            Container(
-              height: 110,
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF005B8F), Color(0xFF7AC143)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Link your telebirr\nwith FAYDA',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            // FAYDA Promo Banner Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'images/fayda_banner.jpg',
+                width: double.infinity,
+                height: 110,
+                fit: BoxFit.cover,
               ),
             ),
             const SizedBox(height: 8),
@@ -284,22 +266,22 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                         color: const Color(0xFFF5A623),
                         borderRadius: BorderRadius.circular(6),
                       ),
-child: const Icon(Icons.person, color: Colors.white),
-),
-title: Text(
-contact['name']!,
-style: const TextStyle(fontWeight: FontWeight.w500),
-),
-subtitle: Text(
-'251${contact['phone']!}',
-style: const TextStyle(fontSize: 12, color: Colors.black54),
-),
-trailing:
-const Icon(Icons.chevron_right, color: Colors.grey),
-onTap: () {
-_phoneController.text = contact['phone']!;
-_navigateToAmount(
-contact['phone']!,
+                      child: const Icon(Icons.person, color: Colors.white),
+                    ),
+                    title: Text(
+                      contact['name']!,
+                      style: const TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                    subtitle: Text(
+                      '251${contact['phone']!}',
+                      style:
+                          const TextStyle(fontSize: 12, color: Colors.black54),
+                    ),
+                    trailing:
+                        const Icon(Icons.chevron_right, color: Colors.grey),
+                    onTap: () {
+                      _phoneController.text = contact['phone']!;
+                      _navigateToAmount(contact['phone']!,
 customName: contact['name'],
 );
 },
