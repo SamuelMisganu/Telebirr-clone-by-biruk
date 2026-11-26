@@ -26,7 +26,6 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
     _transactionTime = _formatCurrentTime();
     _transactionNumber = _generateTransactionId();
 
-    // Save transaction to live history list for "Transaction Details >"
     TransactionHistoryNotifier.add(
       TransactionRecord(
         recipientName: widget.recipientName,
@@ -37,7 +36,6 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
     );
   }
 
-  // Generates current date & time in YYYY/MM/DD HH:MM:SS format
   String _formatCurrentTime() {
     final now = DateTime.now();
     String twoDigits(int n) => n.toString().padLeft(2, '0');
@@ -45,7 +43,6 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
         '${twoDigits(now.hour)}:${twoDigits(now.minute)}:${twoDigits(now.second)}';
   }
 
-  // Generates a realistic 10-character Telebirr ID starting with "DK" (e.g., DKK8G0V69G)
   String _generateTransactionId() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     final random = Random();
@@ -148,7 +145,7 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
               _buildDetailRow('Transaction Number:', _transactionNumber),
               const SizedBox(height: 16),
 
-              // QR Code Link
+              // Built-in Icon + Text QR Code Link
               Align(
                 alignment: Alignment.centerRight,
                 child: Row(
@@ -169,38 +166,19 @@ class _TransactionSuccessPageState extends State<TransactionSuccessPage> {
               ),
               const SizedBox(height: 20),
 
-              // FAYDA Promo Banner
-              Container(
-                width: double.infinity,
-                height: 105,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF005B9F), Color(0xFF8CC63F)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Link your telebirr\nwith FAYDA',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    Icon(Icons.phone_android, color: Colors.white, size: 46),
-                  ],
+              // FAYDA Promo Banner Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.asset(
+                  'images/fayda_banner.jpg',
+                  width: double.infinity,
+                  height: 105,
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(height: 10),
 
-              // Banner Indicator Dots (matching screenshot)
+              // Banner Indicator Dots
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
