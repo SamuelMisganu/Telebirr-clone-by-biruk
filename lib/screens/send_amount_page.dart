@@ -285,21 +285,7 @@ class _SendAmountPageState extends State<SendAmountPage> {
             onPressed: () => _onKeyPress(label),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
-                Row(
-children: [
-_buildDigitKey('7'),
-_buildDigitKey('8'),
-_buildDigitKey('9'),
-],
-),
-Row(
-children: [
-_buildDigitKey('0', flex: 2),
-_buildDigitKey('.'),
-],
-),
-],
-),
+               ),
 ),
 Expanded(
 flex: 1,
