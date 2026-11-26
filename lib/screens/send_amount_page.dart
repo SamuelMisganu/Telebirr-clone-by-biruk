@@ -66,9 +66,10 @@ class _SendAmountPageState extends State<SendAmountPage> {
             Text(
               'Send Money to ${widget.recipientName}',
               style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87),
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+              ),
             ),
             const SizedBox(height: 10),
             RichText(
@@ -77,16 +78,18 @@ class _SendAmountPageState extends State<SendAmountPage> {
                   TextSpan(
                     text: totalAmount.toStringAsFixed(2),
                     style: const TextStyle(
-                        fontSize: 34,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 34,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                   const TextSpan(
                     text: 'ETB',
                     style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
                   ),
                 ],
               ),
@@ -95,11 +98,15 @@ class _SendAmountPageState extends State<SendAmountPage> {
             _buildCard(
               Column(
                 children: [
-                  _buildFeeRow('Original Amount',
-                      '${originalAmount.toStringAsFixed(2)}ETB'),
+                  _buildFeeRow(
+                    'Original Amount',
+                    '${originalAmount.toStringAsFixed(2)}ETB',
+                  ),
                   const SizedBox(height: 16),
                   _buildFeeRow(
-                      'Service fee', '${serviceFee.toStringAsFixed(2)}ETB'),
+                    'Service fee',
+                    '${serviceFee.toStringAsFixed(2)}ETB',
+                  ),
                 ],
               ),
             ),
@@ -108,8 +115,10 @@ class _SendAmountPageState extends State<SendAmountPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Payment Method',
-                      style: TextStyle(fontSize: 15, color: Colors.black54)),
+                  const Text(
+                    'Payment Method',
+                    style: TextStyle(fontSize: 15, color: Colors.black54),
+                  ),
                   const SizedBox(height: 14),
                   Row(
                     children: [
@@ -120,30 +129,41 @@ class _SendAmountPageState extends State<SendAmountPage> {
                           color: _primaryGreen.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(Icons.account_balance_wallet,
-                            color: _primaryGreen, size: 20),
+                        child: const Icon(
+                          Icons.account_balance_wallet,
+                          color: _primaryGreen,
+                          size: 20,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Balance',
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.black87)),
+                            const Text(
+                              'Balance',
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black87,
+                              ),
+                            ),
                             const SizedBox(height: 2),
                             Text(
                               '(Available Balance:${availableBalance.toStringAsFixed(2)}ETB)',
                               style: const TextStyle(
-                                  fontSize: 13, color: Colors.black54),
+                                fontSize: 13,
+                                color: Colors.black54,
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      const Icon(Icons.check_circle,
-                          color: _primaryGreen, size: 24),
+                      const Icon(
+                        Icons.check_circle,
+                        color: _primaryGreen,
+                        size: 24,
+                      ),
                     ],
                   ),
                 ],
@@ -163,11 +183,13 @@ class _SendAmountPageState extends State<SendAmountPage> {
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
-                child: const Text('Send',
-                    style:
-                        TextStyle(fontSize: 17, fontWeight: FontWeight.w600)),
+                child: const Text(
+                  'Send',
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
           ],
@@ -175,7 +197,6 @@ class _SendAmountPageState extends State<SendAmountPage> {
       ),
     );
   }
-
   void _showPinBottomSheet(double originalAmount, double totalAmount) {
     String enteredPin = '';
 
@@ -187,9 +208,7 @@ class _SendAmountPageState extends State<SendAmountPage> {
         builder: (modalContext, setModalState) {
           void onPinDigit(String digit) {
             if (enteredPin.length >= 6) return;
-            setModalState(() {
-              enteredPin += digit;
-            });
+            setModalState(() => enteredPin += digit);
 
             if (enteredPin.length == 6) {
               Future.delayed(const Duration(milliseconds: 180), () {
@@ -248,12 +267,10 @@ class _SendAmountPageState extends State<SendAmountPage> {
                         ),
                         const SizedBox(width: 40),
                       ],
-                    )
+                    ),
                   ),
                   const Divider(height: 1, color: Color(0xFFEEEEEE)),
                   const SizedBox(height: 22),
-
-                  // 6 Masked PIN Boxes
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 28),
                     child: Row(
@@ -269,117 +286,343 @@ class _SendAmountPageState extends State<SendAmountPage> {
                             borderRadius: BorderRadius.circular(6),
                             border: Border.all(
                               color: isFilled
-Use code with caution.
-? _primaryGreen
-: const Color(0xFFD0D5DD),
-width: 1.4,
-),
-),
-child: isFilled
-? Container(
-width: 10,
-height: 10,
-decoration: const BoxDecoration(
-color: Colors.black87,
-shape: BoxShape.circle,
-),
-)
-: null,
-);
-}),
-),
-),
-const SizedBox(height: 14),
-const Text(
-'Forgot PIN?',
-style: TextStyle(
-color: _primaryGreen,
-fontSize: 13,
-fontWeight: FontWeight.w500,
-),
-),
-const SizedBox(height: 20),
-// Numeric PIN Keypad
-Container(
-color: const Color(0xFFECEEF1),
-padding: const EdgeInsets.all(4),
-child: Column(
-children: [
-for (final row in [
-['1', '2', '3'],
-['4', '5', '6'],
-['7', '8', '9'],
-])
-Row(
-children: row
-.map((d) => _buildPinKey(
-label: d,
-onTap: () => onPinDigit(d),
-))
-.toList(),
-),
-Row(
-children: [
-const Expanded(child: SizedBox(height: 50)),
-_buildPinKey(
-label: '0',
-onTap: () => onPinDigit('0'),
-),
-Expanded(
-child: Padding(
-padding: const EdgeInsets.all(3),
-child: SizedBox(
-height: 50,
-child: ElevatedButton(
-onPressed: onPinBackspace,
-style: ElevatedButton.styleFrom(
-backgroundColor: Colors.white,
-foregroundColor: Colors.black87,
-elevation: 0,
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(4),
-),
-),
-child: const Icon(Icons.backspace_outlined,
-size: 20),
-),
-),
-),
-),
-],
-),
-],
-),
-),
-],
-),
-),
-);
-},
-),
-);
+                                  ? _primaryGreen
+                                  : const Color(0xFFD0D5DD),
+                              width: 1.4,
+                            ),
+                          ),
+                          child: isFilled
+                              ? Container(
+                                  width: 10,
+                                  height: 10,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black87,
+                                    shape: BoxShape.circle,
+                                  ),
+                                )
+                              : null,
+                        );
+                      }),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  const Text(
+                    'Forgot PIN?',
+                    style: TextStyle(
+                      color: _primaryGreen,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    color: const Color(0xFFECEEF1),
+                    padding: const EdgeInsets.all(4),
+                    child: Column(
+                      children: [
+                        for (final row in [
+                          ['1', '2', '3'],
+                          ['4', '5', '6'],
+                          ['7', '8', '9'],
+                        ])
+                          Row(
+                            children: row
+                                .map((d) => _buildPinKey(
+                                      label: d,
+                                      onTap: () => onPinDigit(d),
+                                    ))
+                                .toList(),
+                          ),
+                        Row(
+                          children: [
+                            const Expanded(child: SizedBox(height: 50)),
+                            _buildPinKey(
+                                label: '0', onTap: () => onPinDigit('0')),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(3),
+                                child: SizedBox(
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: onPinBackspace,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.black87,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                    ),
+                                    child: const Icon(Icons.backspace_outlined,
+                                        size: 20),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
-  _buildSideKey(
-onPressed: (double.tryParse(_amount) ?? 0) > 0
-? _showConfirmationBottomSheet
-: null,
-bg: _primaryGreen,
-fg: Colors.white,
-child: const Text(
-'OK',
-style: TextStyle(
-fontSize: 18, fontWeight: FontWeight.w600),
-),
-),
-],
-),
-),
-],
-),
-),
-),
-],
-),
-);
-}
+  Widget _buildPinKey({required String label, required VoidCallback onTap}) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(3),
+        child: SizedBox(
+          height: 50,
+          child: ElevatedButton(
+            onPressed: onTap,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black87,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            child: Text(
+              label,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCard(Widget child) => Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: child,
+      );
+
+  Widget _buildFeeRow(String label, String value) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(label,
+              style: const TextStyle(fontSize: 15, color: Colors.black54)),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      );
+
+  Widget _buildDigitKey(String label, {int flex = 1}) => Expanded(
+        flex: flex,
+        child: Padding(
+          padding: const EdgeInsets.all(3.0),
+          child: SizedBox(
+            height: 52,
+            child: ElevatedButton(
+              onPressed: () => _onKeyPress(label),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black87,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              child: Text(
+                label,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget _buildSideKey({
+    required Widget child,
+    required VoidCallback? onPressed,
+    Color bg = Colors.white,
+    Color fg = Colors.black87,
+  }) =>
+      Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: SizedBox(
+          height: 110,
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: bg,
+              foregroundColor: fg,
+              disabledBackgroundColor: bg.withOpacity(0.45),
+              disabledForegroundColor: fg.withOpacity(0.8),
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            child: child,
+          ),
+        ),
+      );
+
+  @override
+  void dispose() {
+    _notesController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: const Color(0xFFF5F6F8),
+      appBar: AppBar(
+        backgroundColor: _primaryGreen,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Send Money',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: _buildCard(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.recipientName,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    widget.phoneNumber,
+                    style: const TextStyle(fontSize: 13, color: Colors.black54),
+                  ),
+                  const Divider(height: 24),
+                  const Text(
+                    'Amount',
+                    style: TextStyle(fontSize: 13, color: Colors.black54),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      const Text(
+                        'ETB ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          _amount.isEmpty ? '0.00' : _amount,
+                          style: TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                            color:
+                                _amount.isEmpty ? Colors.black26 : Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Divider(height: 24),
+                  TextField(
+                    controller: _notesController,
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(
+                      hintText: 'Add notes (optional)',
+                      hintStyle: TextStyle(color: Colors.black38, fontSize: 14),
+                      border: InputBorder.none,
+                      isDense: true,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const Spacer(),
+          SafeArea(
+            top: false,
+            child: Container(
+              color: const Color(0xFFECEEF1),
+              padding: const EdgeInsets.all(4),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      children: [
+                        for (final row in [
+                          ['1', '2', '3'],
+                          ['4', '5', '6'],
+                          ['7', '8', '9'],
+                        ])
+                          Row(
+                            children:
+                                row.map((d) => _buildDigitKey(d)).toList(),
+                          ),
+                        Row(
+                          children: [
+                            _buildDigitKey('0', flex: 2),
+                            _buildDigitKey('.'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        _buildSideKey(
+                          onPressed: _onBackspace,
+                          child: const Icon(Icons.backspace_outlined),
+                        ),
+                        _buildSideKey(
+                          onPressed: (double.tryParse(_amount) ?? 0) > 0
+                              ? _showConfirmationBottomSheet
+                              : null,
+                          bg: _primaryGreen,
+                          fg: Colors.white,
+                          child: const Text(
+                            'OK',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
